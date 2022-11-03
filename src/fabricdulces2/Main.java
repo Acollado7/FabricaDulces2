@@ -4,101 +4,123 @@ import java.util.Scanner;
 
 
 public class Main {
-    public static <Producto> void main(String[] args) {
-        //El programa debe tener dos opciones, la primera es realizar
-        //los cálculos para ver la viabilidad de los productos y la segunda debe
-        // ser “terminar”. Para terminar el programa el usuario debe escribir la
-        // palabra Salir (ignorando mayúsculas y minúsculas). En caso de escribir
-        // otra cosa, el programa volverá al menú principal.
-        //El programa debe filtrar los códigos de los productos. En caso de
-        // introducir un código inexistente, el programa preguntará de nuevo
-        // por el código a introducir. Si el usuario escribe Salir (ignorando
-        // mayúsculas y minúsculas) el programa termina.
-        //También se debe filtrar el precio de la materia prima. En caso de que el
-        // usuario introduzca un número fuera del rango, el programa debe solicitarlo de nuevo.
-        //En este ejercicio también se debe solicitar el coste de la mano de obra para
-        // ese producto (siempre entre 0.5€ y 0.9€). En caso de error al introducir este
-        // dato, el programa solicitará de nuevo esta información.
-        //El resto de restricciones son las mismas que en el ejercicio 3B, pero intenta
-        // aplicar las posibles correcciones del ejercicio que hicimos en clase, para que tu
-        // código no sea tan repetitivo y sea más legible.
-        //Incluye comentarios en el código que permiten leer mejor tu programa.
+    //Vamos a usar metodos
+    public static double precioMateriaPrima(Scanner sc){
+        double resultado;
+        double opcion;
+        final double MINIMO = 1;
+        final double MAXIMO = 2;
+        do {
+            System.out.println("Introduzca precio de la materia prima: ");
+            opcion = sc.nextDouble();
+                if (opcion < MAXIMO && MINIMO < opcion ){
+                    resultado = opcion;
+                    break;
+                }
+
+        }while (true);
+        return resultado;
+    }
+
+    public static double precioCosteProduccion (Scanner sc){
+        double resultado;
+        double opcion;
+        final double MINIMO = 0.5;
+        final double MAXIMO = 0.9;
+        do {
+            System.out.println("Introduzca precio del coste de produccion: ");
+            opcion = sc.nextDouble();
+            if (opcion < MAXIMO && MINIMO < opcion ){
+                resultado = opcion;
+                break;
+            }
+
+        }while (true);
+        return resultado;
+    }
+
+
+
+    public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
 
-        //Declaración de variables
-        String codigo;
-        String nombre;
-        double precio;
-        double coste;
-        double precioVenta;
-        double margen;
-        double margenMinimo;
-        double margenMaximo;
-        double precioMinimo;
-        double precioMaximo;
-
         //Declaración de constantes
-        final double PRECIO_MINIMO = 0.5;
-        final double PRECIO_MAXIMO = 0.9;
-        final double MARGEN_MINIMO = 0.3;
-        final double MARGEN_MAXIMO = 0.5;
 
+        final double BENEFICIO = 2500;
 
         System.out.println("Bienvenido al programa de fabricación de dulces");
-        System.out.println("Por favor, seleccione una opción del menú");
-        System.out.println("1. Calcular viabilidad de productos");
-        System.out.println("2. Terminar");
-        int opcion = sc.nextInt();
-        sc.nextLine();
 
+
+        //Declaración de variables
+        String opcion  ;
+        double materiaPrima;
+        double costeProduccion;
+
+
+        //Usando switch para elegir la opción
+
+        do {
+            System.out.println("Por favor, seleccione una opción del menú");
+            System.out.println("1. Calcular viabilidad de productos");
+            System.out.println("Las opciones son: D1, D2, D3, D4, D5");
+            System.out.println("SALIR");
+        opcion = sc.nextLine();
+
+        opcion = opcion.toUpperCase();
         switch (opcion) {
-            case 1:
-                System.out.println("Introduzca el código del producto");
-                codigo = sc.nextLine();
-                System.out.println("Introduzca el nombre del producto");
-                nombre = sc.nextLine();
-                System.out.println("Introduzca el precio de la materia prima");
-                precio = sc.nextDouble();
-                if (precio < 0.1 || precio > 0.5) {
-                    System.out.println("El precio debe estar entre 0.1 y 0.5");
-                    System.out.println("Introduzca el precio de la materia prima");
-                    precio = sc.nextDouble();
-                }
-                System.out.println("Introduzca el coste de la mano de obra");
-                coste = sc.nextDouble();
-                if (coste < 0.5 || coste > 0.9) {
-                    System.out.println("El coste debe estar entre 0.5 y 0.9");
-                    System.out.println("Introduzca el coste de la mano de obra");
-                    coste = sc.nextDouble();
-                }
-                precioVenta = precio + coste;
-                margen = precioVenta - precio;
-                margenMinimo = precio * MARGEN_MINIMO;
-                margenMaximo = precio * MARGEN_MAXIMO;
-                precioMinimo = precio + margenMinimo;
-                precioMaximo = precio + margenMaximo;
+            case "D1":
+                System.out.println("Ha seleccionado la opción D1");
+                    materiaPrima = precioMateriaPrima (sc);
+                    costeProduccion = precioCosteProduccion(sc);
+                System.out.printf("La opcion " + opcion + " cuesta = %.2f %n" , (materiaPrima + costeProduccion));
+                System.out.println("Harian falta = " + (Math.ceil(BENEFICIO/(materiaPrima + costeProduccion))) + " unidades ");
+                opcion = "salir" ;
 
-                if (margen > margenMinimo && margen < margenMaximo) {
-                    System.out.println("El producto " + nombre + " es viable");
-                    System.out.println("El precio de venta debe ser entre " + precioMinimo + " y " + precioMaximo);
-                } else {
-                    System.out.println("El producto " + nombre + " no es viable");
-                }
+
                 break;
-            case 2:
-                System.out.println("Hasta luego");
+            case "D2":
+                System.out.println("Ha seleccionado la opción D2");
+                materiaPrima = precioMateriaPrima (sc);
+                costeProduccion = precioCosteProduccion(sc);
+                System.out.printf("La opcion " + opcion + " cuesta = %.2f %n" , (materiaPrima + costeProduccion));
+                System.out.println("Harian falta = " + (Math.ceil(BENEFICIO/(materiaPrima + costeProduccion))) + " unidades ");
+                opcion = "salir" ;
                 break;
+            case "D3":
+                System.out.println("Ha seleccionado la opción D3");
+                materiaPrima = precioMateriaPrima (sc);
+                costeProduccion = precioCosteProduccion(sc);
+                System.out.printf("La opcion " + opcion + " cuesta = %.2f %n" , (materiaPrima + costeProduccion));
+                System.out.println("Harian falta = " + (Math.ceil(BENEFICIO/(materiaPrima + costeProduccion))) + " unidades ");
+                opcion = "salir" ;
+                break;
+            case "D4":
+                System.out.println("Ha seleccionado la opción D4");
+                materiaPrima = precioMateriaPrima (sc);
+                costeProduccion = precioCosteProduccion(sc);
+                System.out.printf("La opcion " + opcion + " cuesta = %.2f %n" , (materiaPrima + costeProduccion));
+                System.out.println("Harian falta = " + (Math.ceil(BENEFICIO/(materiaPrima + costeProduccion))) + " unidades ");
+                opcion = "salir" ;
+                break;
+            case "D5":
+                System.out.println("Ha seleccionado la opción D5");
+                materiaPrima = precioMateriaPrima (sc);
+                costeProduccion = precioCosteProduccion(sc);
+                System.out.printf("La opcion " + opcion + " cuesta = %.2f %n" , (materiaPrima + costeProduccion));
+                System.out.println("Harian falta = " + (Math.ceil(BENEFICIO/(materiaPrima + costeProduccion))) + " unidades ");
+                opcion = "salir" ;
+                break;
+
+            case "SALIR":
+                break;
+
             default:
                 System.out.println("Opción incorrecta");
                 break;
         }
 
 
-
-
-
-
-
+        }while (!opcion.equalsIgnoreCase("SALIR"));
     }
 }
